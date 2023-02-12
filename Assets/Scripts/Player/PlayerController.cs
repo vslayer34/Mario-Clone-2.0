@@ -6,14 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     Stats playerStats;
-
     Rigidbody2D playerRB;                                   // rigid body variabe
-
     [SerializeField]
     SpriteRenderer playerSprite;                            // reference to the sprite renderer
-
     [SerializeField]
     Joystick joystick;                                      // reference to the joystick
+    [SerializeField]
+    Animator playerAnimator;
 
     float speed;                                            // speed of the player
 
@@ -46,13 +45,17 @@ public class PlayerController : MonoBehaviour
     /// <param name="input"></param>
     void Move(float input)
     {
+        if (input == 0)
+            playerRB.velocity = new Vector2(0.0f, playerRB.velocity.y);           // instant stop
+
         // flip the sprite renderer
-        if (input < 0)
+        else if (input < 0)
             playerSprite.flipX = true;
         else
             playerSprite.flipX = false;
 
         // move the player
         playerRB.velocity = new Vector2(input * Time.deltaTime * speed, playerRB.velocity.y);
+        playerAnimator.SetFloat(AnimatorParam.playerSpeed, Mathf.Abs(input));
     }
 }
