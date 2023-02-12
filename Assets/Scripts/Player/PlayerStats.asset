@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   speed: 250
+  jumpForce: 100
