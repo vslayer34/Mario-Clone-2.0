@@ -7,8 +7,16 @@ public class CheckIsGrounded : MonoBehaviour
     [SerializeField]
     PlayerController playerControllerScript;
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    // Remain grounded on the ground
+    private void OnTriggerStay2D(Collider2D collision)
     {
         playerControllerScript.isGrounded = true;
+    }
+
+
+    // set is grounded to false when the player is not colliding on the ground
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        playerControllerScript.isGrounded = false;
     }
 }

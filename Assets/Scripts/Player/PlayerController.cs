@@ -20,9 +20,8 @@ public class PlayerController : MonoBehaviour
     float movementX;
     float movementY;
 
-    public bool isGrounded;
+    public bool isGrounded;                                 // Check if the player is grounded
 
-    public UnityEvent jump;
 
     void Start()
     {
@@ -42,7 +41,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move(movementX);
-        //Jump(isGrounded);
+        Jump(isGrounded);
     }
 
     /// <summary>
@@ -67,10 +66,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void Jump(bool isGrounded)
+    public void Jump(bool isJumping)
     {
-        if (movementY > 0.5 && isGrounded)
+        if (movementY > 0.5 && isJumping)
         {
+            // Add the jump force
             Vector2 jumpDirection = Vector2.up * playerStats.jumpForce * Time.deltaTime;
             playerRB.AddForce(jumpDirection, ForceMode2D.Impulse);
         }
