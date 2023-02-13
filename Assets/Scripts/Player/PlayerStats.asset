@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   speed: 250
-  jumpForce: 500
-  animator: {fileID: 9100000, guid: e3234d3b7c99bd64abdf7bee450b3aff, type: 2}
+  jumpForce: 750

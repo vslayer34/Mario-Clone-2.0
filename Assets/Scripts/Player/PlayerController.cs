@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(bool isJumping)
     {
-        if (movementY > 0.5 && isJumping)
+        if (movementY > 0.8 && isJumping)
         {
             // Add the jump force and trigger the jumping animation
             Vector2 jumpDirection = Vector2.up * playerStats.jumpForce * Time.deltaTime;
