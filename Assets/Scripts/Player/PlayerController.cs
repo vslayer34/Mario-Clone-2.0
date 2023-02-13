@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
     {
         // get a referance to the player rigid body
         playerRB = GetComponent<Rigidbody2D>();
-        
-        
     }
 
     void Update()
@@ -70,9 +68,26 @@ public class PlayerController : MonoBehaviour
     {
         if (movementY > 0.5 && isJumping)
         {
-            // Add the jump force
+            // Add the jump force and trigger the jumping animation
             Vector2 jumpDirection = Vector2.up * playerStats.jumpForce * Time.deltaTime;
             playerRB.AddForce(jumpDirection, ForceMode2D.Impulse);
+            playerAnimator.SetBool(AnimatorParam.playerIsJumping, isJumping);
+        }
+
+        CheckPlayerFalling();
+    }
+
+
+    /// <summary>
+    /// Check if the player is falling to play the falling animation
+    /// </summary>
+    void CheckPlayerFalling()
+    {
+        if (playerRB.velocity.y < -0.1f && !isGrounded)
+        {
+            // turns off the jumping animation and plays the falling animation
+            playerAnimator.SetBool(AnimatorParam.playerIsJumping, false);
+            playerAnimator.SetBool(AnimatorParam.playerIsFalling, true);
         }
     }
 }
