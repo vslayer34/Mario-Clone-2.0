@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,12 +16,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Animator playerAnimator;
 
-    float speed;                                            // speed of the player
-    float jumpForce;
-
     // variables to save the joystick input movement
     float movementX;
     float movementY;
+
+    public bool isGrounded;
+
+    public UnityEvent jump;
 
     void Start()
     {
@@ -31,10 +34,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // set the player speed to value in the player stats
-        speed = playerStats.speed;
-        jumpForce = playerStats.jumpForce;
-
         // update the values of joystick movement
         movementX = joystick.Horizontal;
         movementY = joystick.Vertical;
@@ -43,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move(movementX);
-        Jump(movementY);
+        //Jump(isGrounded);
     }
 
     /// <summary>
@@ -63,16 +62,16 @@ public class PlayerController : MonoBehaviour
             playerSprite.flipX = false;
 
         // move the player
-        playerRB.velocity = new Vector2(inputX * Time.deltaTime * speed, playerRB.velocity.y);
+        playerRB.velocity = new Vector2(inputX * Time.deltaTime * playerStats.speed, playerRB.velocity.y);
         playerAnimator.SetFloat(AnimatorParam.playerSpeed, Mathf.Abs(inputX));
     }
 
 
-    void Jump(float inputY)
+    public void Jump(bool isGrounded)
     {
-        if (inputY > 0.5)
+        if (movementY > 0.5 && isGrounded)
         {
-            Vector2 jumpDirection = Vector2.up * jumpForce * Time.deltaTime;
+            Vector2 jumpDirection = Vector2.up * playerStats.jumpForce * Time.deltaTime;
             playerRB.AddForce(jumpDirection, ForceMode2D.Impulse);
         }
     }
